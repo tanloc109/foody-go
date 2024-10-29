@@ -1,0 +1,14 @@
+1. Config Services
+2. Discovery Services
+3. Gateway Services
+------------------------------------
+4. User Services
+5. Restaurant Services
+6. Location Services
+7. Inventory Services
+8. Order Services
+9. Shipping Services
+10. Payment Services
+11. Notification Services
+12. Review Services (* Optional)
+13. Analytics Services (* Optional)

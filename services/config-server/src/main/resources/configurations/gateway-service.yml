@@ -1,0 +1,49 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user-service
+          uri: lb:http://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+        - id: restaurant-service
+          uri: lb:http://RESTAURANT-SERVICE
+          predicates:
+            - Path=/api/v1/restaurants/**
+        - id: location-service
+          uri: lb:http://LOCATION-SERVICE
+          predicates:
+            - Path=/api/v1/locations/**
+        - id: inventory-service
+          uri: lb:http://INVENTORY-SERVICE
+          predicates:
+            - Path=/api/v1/inventories/**
+        - id: order-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
+        - id: shipping-service
+          uri: lb:http://SHIPPING-SERVICE
+          predicates:
+            - Path=/api/v1/shipping/**
+        - id: payment-service
+          uri: lb:http://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payments/**
+        - id: review-service
+          uri: lb:http://REVIEW-SERVICE
+          predicates:
+            - Path=/api/v1/reviews/**
+        - id: analytic-service
+          uri: lb:http://ANALYTIC-SERVICE
+          predicates:
+            - Path=/api/v1/analytics/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
