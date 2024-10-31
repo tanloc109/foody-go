@@ -9,6 +9,7 @@
 8. Order Services
 9. Shipping Services
 10. Payment Services
-11. Notification Services
+11. Notification Services (MongoDB)
+------------------------------------
 12. Review Services (* Optional)
 13. Analytics Services (* Optional)
