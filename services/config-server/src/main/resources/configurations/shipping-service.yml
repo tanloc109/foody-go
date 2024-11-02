@@ -1,0 +1,7 @@
+server:
+  port: 8086
+springdoc:
+  swagger-ui:
+    path: /
+    operationsSorter: alpha
+    tagsSorter: alpha
