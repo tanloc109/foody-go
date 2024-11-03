@@ -19,7 +19,7 @@ public class OrderDetail {
     double price;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "customer_order_id")
     Order order;
 
 }
