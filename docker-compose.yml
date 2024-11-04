@@ -15,33 +15,33 @@ services:
       - "5432:5432"
     restart: unless-stopped
 
-  mysql:
-    container_name: mysql
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
-      MYSQL_DATABASE: mysql
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql:/var/lib/mysql
-    restart: unless-stopped
-
-  mssql:
-    container_name: mssql
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      #MSSQL_ROOT_PASSWORD: mssql
-      MSSQL_DATABASE: mssql_db
-      SA_PASSWORD: McnYVd:ZSHvz4X)t
-      ACCEPT_EULA: Y
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql:/var/opt/mssql
-    restart: no
+#  mysql:
+#    container_name: mysql
+#    image: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 123456
+#      MYSQL_USER: mysql
+#      MYSQL_PASSWORD: mysql
+#      MYSQL_DATABASE: mysql
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - mysql:/var/lib/mysql
+#    restart: unless-stopped
+#
+#  mssql:
+#    container_name: mssql
+#    image: mcr.microsoft.com/mssql/server:2022-latest
+#    environment:
+#      #MSSQL_ROOT_PASSWORD: mssql
+#      MSSQL_DATABASE: mssql_db
+#      SA_PASSWORD: McnYVd:ZSHvz4X)t
+#      ACCEPT_EULA: Y
+#    ports:
+#      - "1433:1433"
+#    volumes:
+#      - mssql:/var/opt/mssql
+#    restart: no
 
   mongodb:
     container_name: mongodb

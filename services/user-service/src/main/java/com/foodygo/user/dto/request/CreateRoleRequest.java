@@ -1,17 +1,13 @@
-package com.foodygo.location.entity;
+package com.foodygo.user.dto.request;
 
-import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Ward {
-    Integer id;
+public class CreateRoleRequest {
     String name;
-    Boolean isDeleted = false;
 }

@@ -1,4 +1,4 @@
-package com.foodygo.user.dto.response;
+package com.foodygo.user.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LoginResponse {
-    String token;
-    String username;
+public class ForgetPasswordRequest {
+    String phone;
 }

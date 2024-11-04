@@ -1,5 +1,7 @@
 package com.foodygo.user.service;
 
+import com.foodygo.user.dto.request.CreateRoleRequest;
+import com.foodygo.user.dto.request.UpdateRoleRequest;
 import com.foodygo.user.entity.Role;
 import com.foodygo.user.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +26,24 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role save(Role role) {
+    public Role create(CreateRoleRequest request) {
+        Role role = new Role();
+        role.setName(request.getName());
         return repo.save(role);
     }
 
     @Override
-    public void delete(Integer id) {
+    public Role update(Integer id, UpdateRoleRequest request) {
+        Role role = repo.findByIdAndIsDeletedFalse(id);
+        role.setName(request.getName());
+        return repo.save(role);
+    }
+
+    @Override
+    public Object delete(Integer id) {
         Role temp = findById(id);
         temp.setIsDeleted(true);
         repo.save(temp);
+        return null;
     }
 }
