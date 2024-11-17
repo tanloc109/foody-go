@@ -1,20 +1,6 @@
 # docker compose up -d
 # docker compose down --volumes
 services:
-  postgresql:
-    container_name: postgresql
-    image: postgres
-    environment:
-      POSTGRES_USER: postgresql
-      POSTGRES_PASSWORD: postgresql
-      POSTGRES_DB: postgresql
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
-
   mysql:
     container_name: mysql
     image: mysql
@@ -29,29 +15,6 @@ services:
       - mysql:/var/lib/mysql
     restart: unless-stopped
 
-  mssql:
-    container_name: mssql
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      ACCEPT_EULA: Y
-      SA_PASSWORD: "Password@123!"
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql:/var/opt/mssql
-    restart: unless-stopped
-
-  mssql-tools:
-    image: mcr.microsoft.com/mssql-tools
-    depends_on:
-      - mssql
-    entrypoint: >
-      /bin/sh -c "
-      sleep 20;
-      /opt/mssql-tools/bin/sqlcmd -S mssql -U SA -P "Password@123!" -i /sql/init.sql"
-    volumes:
-      - ./sql/mssql:/sql
-
   mongodb:
     container_name: mongodb
     image: mongo:latest
@@ -64,18 +27,6 @@ services:
     volumes:
       - ./sql/mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongo:/data/lib
-    restart: unless-stopped
-
-  oracledb:
-    container_name: oracledb
-    image: container-registry.oracle.com/database/free:latest
-    environment:
-      ORACLE_PWD: oracledb
-      ORACLE_SID: oracledb
-    ports:
-      - "1521:1521"
-    volumes:
-      - oracle:/opt/oracle/oradata
     restart: unless-stopped
 
   redis:
@@ -114,9 +65,6 @@ services:
       - zookeeper
 
 volumes:
-  postgres:
   mysql:
-  mssql:
   mongo:
-  oracle:
   redis:
