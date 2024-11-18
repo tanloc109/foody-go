@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 public record ShippingByBranchResponse(
-        List<Branch> branches
+        Branch branch
 ) {
     @Builder
     public record Branch(
