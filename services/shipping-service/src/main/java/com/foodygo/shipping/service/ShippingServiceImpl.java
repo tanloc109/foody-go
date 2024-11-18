@@ -2,8 +2,10 @@ package com.foodygo.shipping.service;
 
 import com.foodygo.shipping.dto.response.ShippingByBranchResponse;
 import com.foodygo.shipping.dto.response.ShippingByShipperResponse;
+import com.foodygo.shipping.entity.Shipper;
 import com.foodygo.shipping.entity.Shipping;
 import com.foodygo.shipping.exception.IdNotFoundException;
+import com.foodygo.shipping.mapper.ShipperMapper;
 import com.foodygo.shipping.repository.ShippingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 public class ShippingServiceImpl implements ShippingService {
 
     private final ShippingRepository repo;
+    private final ShipperService shipperService;
 
     @Override
     public Shipping save(Shipping shipping) {
@@ -41,7 +44,10 @@ public class ShippingServiceImpl implements ShippingService {
 
     @Override
     public ShippingByShipperResponse getShippingsByShipperId(Integer shipperId) {
-        return null;
+        Shipper shipper = shipperService.findById(shipperId);
+        return ShippingByShipperResponse.builder()
+                .shipper(ShipperMapper.INSTANCE.toDTO(shipper))
+                .build();
     }
 
     @Override

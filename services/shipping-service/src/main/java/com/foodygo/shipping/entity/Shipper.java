@@ -39,9 +39,9 @@ public class Shipper {
     @Enumerated(EnumType.STRING)
     ShipperStatus status;
 
-    @OneToMany
+    @OneToMany(mappedBy = "shipper")
     List<ShipperLog> logs;
 
-    @OneToMany
+    @OneToMany(mappedBy = "shipper")
     List<Shipping> shippings;
 }

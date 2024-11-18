@@ -5,12 +5,13 @@ import lombok.Builder;
 
 import java.util.List;
 
+@Builder
 public record ShippingByShipperResponse(
         Shipper shipper
 ) {
     @Builder
     public record Shipper(
-            Integer shipperId,
+            Integer id,
             String citizenId,
             String photo,
             String motoModel,
@@ -23,11 +24,10 @@ public record ShippingByShipperResponse(
     ) {
         @Builder
         public record Shipping(
-                Integer shippingId,
+                Integer id,
                 Double distance,
                 Double fee,
-                Integer orderId,
-                ShippingByBranchResponse.Branch.Shipping.Shipper shipper
+                Integer orderId
         ) {
         }
     }
