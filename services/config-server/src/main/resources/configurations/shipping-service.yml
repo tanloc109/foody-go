@@ -16,3 +16,10 @@ springdoc:
     path: /
     operationsSorter: alpha
     tagsSorter: alpha
+api:
+  service:
+    order: http://localhost:8085
+    location: http://localhost:8083
+#logging:
+#  level:
+#    org.springframework: DEBUG

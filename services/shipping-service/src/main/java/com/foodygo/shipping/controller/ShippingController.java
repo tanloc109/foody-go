@@ -4,19 +4,20 @@ import com.foodygo.shipping.dto.response.ApiResponse;
 import com.foodygo.shipping.dto.response.ShippingByBranchResponse;
 import com.foodygo.shipping.dto.response.ShippingByShipperResponse;
 import com.foodygo.shipping.service.ShippingService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/v1/shipping")
 @RequiredArgsConstructor
+@Validated
 public class ShippingController {
 
     private final ShippingService shippingService;
@@ -49,5 +50,34 @@ public class ShippingController {
                 );
     }
 
+    @PostMapping("/orders/{orderId}/{status}")
+    public ResponseEntity<ApiResponse<Object>> acceptOrReject(
+            @PathVariable Integer orderId,
+            @PathVariable @Valid @Pattern(regexp = "accept|reject", message = "Status must be 'accept' or 'reject'") String status
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiResponse.<Object>builder()
+                                .timestamp(Instant.now())
+                                .success(true)
+                                .data(null)
+                                .message("Order " + orderId + " has been " + status + "ed")
+                                .build()
+                );
+    }
 
+    @PostMapping("/calculate-fee")
+    public ResponseEntity<ApiResponse<Object>> calculateShippingCosts() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiResponse.<Object>builder()
+                                .timestamp(Instant.now())
+                                .success(true)
+                                .data(null)
+                                .message("Calculate fee")
+                                .build()
+                );
+    }
 }
