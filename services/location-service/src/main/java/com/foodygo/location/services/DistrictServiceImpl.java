@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DistrictServiceImpl implements DistrictService {
+public class DistrictServiceImpl implements DistrictService{
 
     private final DistrictRepository districtRepository;
 
     @Override
     public District findById(Integer districtId) {
         return districtRepository.findById(districtId)
-                .orElseThrow(() -> new IdNotFoundException("District ID Not Found!"));
+                .orElseThrow(() -> new IdNotFoundException("District Not Found!"));
     }
 
     @Override

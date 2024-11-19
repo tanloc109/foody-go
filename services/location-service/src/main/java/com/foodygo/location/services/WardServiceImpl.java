@@ -14,7 +14,8 @@ public class WardServiceImpl implements WardService {
 
     @Override
     public Ward findById(Integer wardId) {
-        return wardRepository.findById(wardId).orElseThrow(() -> new IdNotFoundException("Ward ID Not Found!"));
+        return wardRepository.findById(wardId)
+                .orElseThrow(() -> new IdNotFoundException("Ward Not Found"));
     }
 
     @Override

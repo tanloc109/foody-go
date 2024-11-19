@@ -43,9 +43,9 @@ public class LocationServiceImpl implements LocationService {
                 District district = District.builder()
                         .id(Integer.parseInt(dataItem.get("id").asText()))
                         .name(dataItem.get("name").asText())
-                        .province(provinceService.findById(Integer.parseInt(dataItem.get("provinceId").asText())))
                         .type(dataItem.get("type").asInt())
                         .isDeleted(false)
+                        .provinceId(dataItem.get("provinceId").asInt())
                         .build();
                 districtService.save(district);
             });
@@ -57,7 +57,7 @@ public class LocationServiceImpl implements LocationService {
                     Ward ward = Ward.builder()
                             .id(Integer.parseInt(dataItem.get("id").asText()))
                             .name(dataItem.get("name").asText())
-                            .district(districtService.findById(Integer.parseInt(dataItem.get("districtId").asText())))
+                            .districtId(dataItem.get("districtId").asInt())
                             .type(dataItem.get("type").asInt())
                             .isDeleted(false)
                             .build();

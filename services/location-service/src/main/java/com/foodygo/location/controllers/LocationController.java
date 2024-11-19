@@ -1,6 +1,7 @@
 package com.foodygo.location.controllers;
 
 import com.foodygo.location.services.LocationService;
+import com.foodygo.location.services.ProvinceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
