@@ -9,18 +9,48 @@ services:
     image: config-server:latest
     ports:
       - "8888:8888"
-    volumes:
-      - ./services/config-server/target/config-server.jar:/app.jar
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
 
   discovery:
     container_name: discovery
     build:
       context: ./services/discovery
     image: discovery:latest
+    depends_on:
+      - config-server
     ports:
-      - "8888:8888"
-    volumes:
-      - ./services/discovery/target/discovery.jar:/app.jar
+      - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./services/gateway
+    image: gateway:latest
+    depends_on:
+      - discovery
+    ports:
+      - "8080:8080"
+
+  shipping-service:
+    container_name: shipping-service
+    build:
+      context: ./services/shipping-service
+    image: shipping-service:latest
+    depends_on:
+      - discovery
+    ports:
+      - "8086:8086"
 
   mysql:
     container_name: mysql
@@ -34,6 +64,8 @@ services:
       - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
+    profiles:
+      - init
     restart: unless-stopped
 
   mongodb:
@@ -48,6 +80,8 @@ services:
     volumes:
       - ./sql/mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongo:/data/lib
+    profiles:
+      - init
     restart: unless-stopped
 
   redis:
@@ -57,6 +91,8 @@ services:
       - "6379:6379"
     volumes:
       - redis:/data
+    profiles:
+      - init
     restart: unless-stopped
 
   zookeeper:
@@ -68,6 +104,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "22181:2181"
+    profiles:
+      - init
     restart: unless-stopped
 
   kafka:
@@ -82,6 +120,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
     ports:
       - "9092:9092"
+    profiles:
+      - init
     depends_on:
       - zookeeper
 
