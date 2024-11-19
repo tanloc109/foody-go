@@ -1,6 +1,27 @@
 # docker compose up -d
 # docker compose down --volumes
 services:
+
+  config-server:
+    container_name: config-server
+    build:
+      context: ./services/config-server
+    image: config-server:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./services/config-server/target/config-server.jar:/app.jar
+
+  discovery:
+    container_name: discovery
+    build:
+      context: ./services/discovery
+    image: discovery:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./services/discovery/target/discovery.jar:/app.jar
+
   mysql:
     container_name: mysql
     image: mysql
