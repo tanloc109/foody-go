@@ -1,24 +1,22 @@
-  spring:
-    datasource:
-      url: jdbc:postgresql://localhost:5432/order
-      username: postgres
-      password: root
-      driver-class-name: org.postgresql.Driver
-    jpa:
-      hibernate:
-        ddl-auto: update
-      database: postgresql
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
-  server:
-    port: 8085
-
-  application:
-    config:
-      user-url: http://localhost:8081/api/v1/users
-      payment-url: http://localhost:8087/api/v1/payments
-      product-url: http://localhost:8088/api/v1/products
-
-  springdoc:
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8085
+application:
+  config:
+    user-url: http://localhost:8081/api/v1/users
+    payment-url: http://localhost:8087/api/v1/payments
+    product-url: http://localhost:8088/api/v1/products
+springdoc:
   swagger-ui:
     path: /
     operationsSorter: alpha

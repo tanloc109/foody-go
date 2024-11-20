@@ -55,6 +55,18 @@ spring:
             - Path=/restaurant-service/swagger-ui.html
           filters:
             - RewritePath=/restaurant-service(?<segment>/?.*), $\{segment}
+        - id: shipping-service-swagger
+          uri: lb://SHIPPING-SERVICE
+          predicates:
+            - Path=/shipping-service/swagger-ui.html
+          filters:
+            - RewritePath=/shipping-service(?<segment>/?.*), $\{segment}
+        - id: order-service-swagger
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/swagger-ui.html
+          filters:
+            - RewritePath=/order-service(?<segment>/?.*), $\{segment}
 
 
 eureka:

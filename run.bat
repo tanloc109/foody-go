@@ -2,12 +2,14 @@
 setlocal enabledelayedexpansion
 
 docker-compose down -v
-docker-compose up mysql mongodb redis zookeeper -d
+docker-compose up mysql mongodb redis zookeeper postgresql -d
 
 set BASE_DIR=%~dp0services
-set SERVICES=gateway inventory-service location-service notification-service order-service payment-service restaurant-service shipping-service user-service
+REM gateway inventory-service location-service notification-service order-service payment-service restaurant-service shipping-service user-service
+set SERVICES=gateway shipping-service user-service order-service
 
 rem Start the config-server service silently
+rmdir /s /q "%BASE_DIR%\config-server\target"
 start /B cmd /C "cd %BASE_DIR%\config-server && mvn spring-boot:run > nul 2>&1"
 
 rem Wait for config-server to be ready
@@ -18,6 +20,7 @@ netstat -an | findstr "8888" >nul
 if errorlevel 1 goto wait_for_config
 
 rem Start the discovery service silently
+rmdir /s /q "%BASE_DIR%\discovery\target"
 start /B cmd /C "cd %BASE_DIR%\discovery && mvn spring-boot:run > nul 2>&1"
 
 rem Wait for discovery service to be ready
@@ -29,6 +32,7 @@ if errorlevel 1 goto wait_for_discovery
 
 rem Start other services silently
 for %%S in (%SERVICES%) do (
+    rmdir /s /q "%BASE_DIR%\%%S\target"
     start /B cmd /C "cd %BASE_DIR%\%%S && mvn spring-boot:run > nul 2>&1"
 )
 
