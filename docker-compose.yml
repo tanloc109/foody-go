@@ -1,19 +1,56 @@
 # docker compose up -d
 # docker compose down --volumes
 services:
-  postgresql:
-    container_name: postgresql
-    image: postgres
-    environment:
-      POSTGRES_USER: postgresql
-      POSTGRES_PASSWORD: postgresql
-      POSTGRES_DB: postgresql
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
+
+  config-server:
+    container_name: config-server
+    build:
+      context: ./services/config-server
+    image: config-server:latest
     ports:
-      - "5432:5432"
-    restart: unless-stopped
+      - "8888:8888"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+
+  discovery:
+    container_name: discovery
+    build:
+      context: ./services/discovery
+    image: discovery:latest
+    depends_on:
+      - config-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./services/gateway
+    image: gateway:latest
+    depends_on:
+      - discovery
+    ports:
+      - "8080:8080"
+
+  shipping-service:
+    container_name: shipping-service
+    build:
+      context: ./services/shipping-service
+    image: shipping-service:latest
+    depends_on:
+      - discovery
+    ports:
+      - "8086:8086"
 
   mysql:
     container_name: mysql
@@ -22,50 +59,29 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_USER: mysql
       MYSQL_PASSWORD: mysql
-      MYSQL_DATABASE: mysql
+      MYSQL_DATABASE: foodygo
     ports:
       - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
+    profiles:
+      - init
     restart: unless-stopped
-
-  mssql:
-    container_name: mssql
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      #MSSQL_ROOT_PASSWORD: mssql
-      MSSQL_DATABASE: mssql_db
-      SA_PASSWORD: McnYVd:ZSHvz4X)t
-      ACCEPT_EULA: Y
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql:/var/opt/mssql
-    restart: no
 
   mongodb:
     container_name: mongodb
     image: mongo:latest
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongodb
-      MONGO_INITDB_ROOT_PASSWORD: mongodb
-    #      MONGO_INITDB_DATABASE: mongodb
+      MONGO_INITDB_ROOT_USERNAME: mongodb_root
+      MONGO_INITDB_ROOT_PASSWORD: mongodb_root
+      MONGO_INITDB_DATABASE: mongodb
     ports:
       - "27017:27017"
     volumes:
+      - ./sql/mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongo:/data/lib
-    restart: unless-stopped
-
-  oracledb:
-    container_name: oracledb
-    image: container-registry.oracle.com/database/free:latest
-    environment:
-      ORACLE_PWD: oracledb
-      ORACLE_SID: oracledb
-    ports:
-      - "1521:1521"
-    volumes:
-      - oracle:/opt/oracle/oradata
+    profiles:
+      - init
     restart: unless-stopped
 
   redis:
@@ -75,6 +91,8 @@ services:
       - "6379:6379"
     volumes:
       - redis:/data
+    profiles:
+      - init
     restart: unless-stopped
 
   zookeeper:
@@ -86,6 +104,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "22181:2181"
+    profiles:
+      - init
     restart: unless-stopped
 
   kafka:
@@ -100,13 +120,12 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
     ports:
       - "9092:9092"
+    profiles:
+      - init
     depends_on:
       - zookeeper
 
 volumes:
-  postgres:
   mysql:
-  mssql:
   mongo:
-  oracle:
   redis:

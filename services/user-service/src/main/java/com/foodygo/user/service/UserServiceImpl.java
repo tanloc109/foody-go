@@ -1,5 +1,6 @@
 package com.foodygo.user.service;
 
+import com.foodygo.user.dto.request.UpdateProfileRequest;
 import com.foodygo.user.entity.User;
 import com.foodygo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +25,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByUsername(String username) {
+        return repo.findByUsernameAndIsDeletedFalse(username);
+    }
+
+    @Override
     public User save(User user) {
         return repo.save(user);
     }
 
     @Override
-    public void delete(Integer id) {
+    public Object delete(Integer id) {
         User temp = findById(id);
         temp.setIsDeleted(true);
         repo.save(temp);
+        return null;
+    }
+
+    @Override
+    public User updateProfile(Integer id, UpdateProfileRequest request) {
+        User temp = findById(id);
+        temp.setUsername(request.getUsername());
+        temp.setFullname(request.getFullname());
+        temp.setEmail(request.getEmail());
+        return repo.save(temp);
     }
 }

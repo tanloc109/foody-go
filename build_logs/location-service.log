@@ -1,0 +1,50 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.foodygo:location-service >--------------------
+[INFO] Building location-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ location-service ---
+[INFO] Deleting C:\Users\NguyenTheAnh\Downloads\GIT\foody-go\services\location-service\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ location-service ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ location-service ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 23 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[WARNING] /C:/Users/NguyenTheAnh/Downloads/GIT/foody-go/services/location-service/src/main/java/com/foodygo/location/dto/response/ApiResponse.java:[17,13] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[WARNING] /C:/Users/NguyenTheAnh/Downloads/GIT/foody-go/services/location-service/src/main/java/com/foodygo/location/entities/Ward.java:[30,13] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[WARNING] /C:/Users/NguyenTheAnh/Downloads/GIT/foody-go/services/location-service/src/main/java/com/foodygo/location/entities/Province.java:[29,13] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[WARNING] /C:/Users/NguyenTheAnh/Downloads/GIT/foody-go/services/location-service/src/main/java/com/foodygo/location/entities/District.java:[30,13] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ location-service ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ location-service ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ location-service ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.2:jar (default-jar) @ location-service ---
+[INFO] Building jar: C:\Users\NguyenTheAnh\Downloads\GIT\foody-go\services\location-service\target\location-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.3.5:repackage (repackage) @ location-service ---
+[INFO] Replacing main artifact C:\Users\NguyenTheAnh\Downloads\GIT\foody-go\services\location-service\target\location-service-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to C:\Users\NguyenTheAnh\Downloads\GIT\foody-go\services\location-service\target\location-service-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.256 s
+[INFO] Finished at: 2024-11-19T17:20:25+07:00
+[INFO] ------------------------------------------------------------------------

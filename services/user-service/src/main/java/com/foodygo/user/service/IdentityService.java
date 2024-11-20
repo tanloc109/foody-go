@@ -8,8 +8,7 @@ import com.foodygo.user.entity.User;
 public interface IdentityService {
     User registerUser(RegisterRequest request);
     LoginResponse login(LoginRequest request);
-    User updateProfile(UpdateProfileRequest request);
-    boolean resetPassword(ResetPasswordRequest request);
-    boolean verifyOTP(VerifyOTP otp);
-    TokenResponse requestResetPassword(String token);
+    boolean resetPassword(String token, ResetPasswordRequest request);
+    TokenResponse verifyOTP(VerifyOTP otp);
+    Object forgetPasswordRequest(ForgetPasswordRequest request);
 }

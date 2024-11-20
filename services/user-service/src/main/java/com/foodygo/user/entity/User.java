@@ -1,5 +1,6 @@
 package com.foodygo.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -40,6 +41,7 @@ public class User implements UserDetails {
     @Column(name = "is_deleted")
     Boolean isDeleted = false;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "users")
     List<Role> roles;
 

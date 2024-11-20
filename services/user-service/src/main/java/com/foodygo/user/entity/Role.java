@@ -26,7 +26,7 @@ public class Role {
     Boolean isDeleted = false;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "role_id"),
