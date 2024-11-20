@@ -1,57 +1,6 @@
 # docker compose up -d
 # docker compose down --volumes
 services:
-
-  config-server:
-    container_name: config-server
-    build:
-      context: ./services/config-server
-    image: config-server:latest
-    ports:
-      - "8888:8888"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
-
-  discovery:
-    container_name: discovery
-    build:
-      context: ./services/discovery
-    image: discovery:latest
-    depends_on:
-      - config-server
-    ports:
-      - "8761:8761"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 10s
-
-  gateway:
-    container_name: gateway
-    build:
-      context: ./services/gateway
-    image: gateway:latest
-    depends_on:
-      - discovery
-    ports:
-      - "8080:8080"
-
-  shipping-service:
-    container_name: shipping-service
-    build:
-      context: ./services/shipping-service
-    image: shipping-service:latest
-    depends_on:
-      - discovery
-    ports:
-      - "8086:8086"
-
   mysql:
     container_name: mysql
     image: mysql
