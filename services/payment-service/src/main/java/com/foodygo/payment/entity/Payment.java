@@ -19,9 +19,11 @@ public class Payment {
 
     Double amount;
 
-    Integer customer_id;
+    @Column(name = "customer_id")
+    Integer customerId;
 
-    Integer order_id;
+    @Column(name = "order_id")
+    Integer orderId;
 
     Instant datetime = Instant.now();
 

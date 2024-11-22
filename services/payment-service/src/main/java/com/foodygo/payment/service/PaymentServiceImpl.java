@@ -1,7 +1,6 @@
 package com.foodygo.payment.service;
 
 import com.foodygo.payment.dto.request.CreatePaymentRequest;
-import com.foodygo.payment.dto.response.CreatePaymentResposne;
 import com.foodygo.payment.dto.response.PaymentResponse;
 import com.foodygo.payment.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +14,9 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final PaymentRepository paymentRepository;
 
-
     @Override
-    public List<PaymentResponse> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public List<PaymentResponse> findByUserId(Integer id) {
-        return List.of();
+    public PaymentResponse createPayment(CreatePaymentRequest request) {
+        return null;
     }
 
     @Override
@@ -32,17 +25,8 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public PaymentResponse findByOrderId(Integer id) {
-        return null;
+    public List<PaymentResponse> findByUserId(Integer id) {
+        return List.of();
     }
 
-    @Override
-    public CreatePaymentResposne createPayment(CreatePaymentRequest request) {
-        return null;
-    }
-
-    @Override
-    public Object deletePayment(Integer id) {
-        return null;
-    }
 }

@@ -1,4 +1,11 @@
 package com.foodygo.payment.dto.request;
 
-public class CreatePaymentRequest {
-}
+import lombok.Builder;
+
+@Builder
+public record CreatePaymentRequest(
+        Double amount,
+        Integer customerId,
+        Integer orderId,
+        Integer methodId
+) {}
