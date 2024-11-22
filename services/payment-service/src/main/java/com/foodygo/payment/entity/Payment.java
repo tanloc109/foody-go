@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.Instant;
+
 @Data
 @Entity
 @Builder
@@ -15,7 +17,13 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    String name;
+    Double amount;
+
+    Integer customer_id;
+
+    Integer order_id;
+
+    Instant datetime = Instant.now();
 
     @Column(name = "is_deleted")
     Boolean isDeleted = false;
