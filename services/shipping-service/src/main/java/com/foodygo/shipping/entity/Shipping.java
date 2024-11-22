@@ -1,8 +1,12 @@
 package com.foodygo.shipping.entity;
 
+import com.foodygo.shipping.entity.enums.ShippingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,9 +25,21 @@ public class Shipping {
 
     Integer orderId;
 
+    Integer branchId;
+
+    Integer customerId;
+
+    @Enumerated(EnumType.STRING)
+    ShippingStatus status;
+
     @Builder.Default
     boolean deleted = false;
 
+    Instant created = Instant.now();
+
     @ManyToOne
     Shipper shipper;
+
+    @OneToMany(mappedBy = "shipping")
+    List<ShipperLog> shippingLogs;
 }
