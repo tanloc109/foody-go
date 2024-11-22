@@ -21,7 +21,8 @@ public class ShipperLog {
 
     Integer orderId;
 
-    Instant time;
+    @Builder.Default
+    Instant time = Instant.now();
 
     ShipperLogAction action;
 
@@ -30,4 +31,7 @@ public class ShipperLog {
 
     @ManyToOne
     Shipper shipper;
+
+    @ManyToOne
+    Shipping shipping;
 }

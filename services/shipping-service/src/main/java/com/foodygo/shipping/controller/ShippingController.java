@@ -1,8 +1,11 @@
 package com.foodygo.shipping.controller;
 
+import com.foodygo.shipping.dto.request.ShippingCreationRequest;
 import com.foodygo.shipping.dto.response.ApiResponse;
 import com.foodygo.shipping.dto.response.ShippingByBranchResponse;
 import com.foodygo.shipping.dto.response.ShippingByShipperResponse;
+import com.foodygo.shipping.dto.response.ShippingCreationResponse;
+import com.foodygo.shipping.service.ShipperLogService;
 import com.foodygo.shipping.service.ShippingService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -21,6 +24,7 @@ import java.time.Instant;
 public class ShippingController {
 
     private final ShippingService shippingService;
+    private final ShipperLogService shipperLogService;
 
     @GetMapping("/shipper/{shipperId}/orders")
     public ResponseEntity<ApiResponse<ShippingByShipperResponse>> getAllShippingsOfShipper(@PathVariable Integer shipperId) {
@@ -50,33 +54,52 @@ public class ShippingController {
                 );
     }
 
-    @PostMapping("/orders/{orderId}/{status}")
-    public ResponseEntity<ApiResponse<Object>> acceptOrReject(
+    @PostMapping("/orders/{orderId}/{shipperId}/{status}")
+    public ResponseEntity<ApiResponse<Void>> acceptOrReject(
             @PathVariable Integer orderId,
+            @PathVariable Integer shipperId,
             @PathVariable @Valid @Pattern(regexp = "accept|reject", message = "Status must be 'accept' or 'reject'") String status
     ) {
+        shipperLogService.acceptOrRejectShipping(orderId,shipperId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
-                        ApiResponse.<Object>builder()
+                        ApiResponse.<Void>builder()
                                 .timestamp(Instant.now())
                                 .success(true)
-                                .data(null)
                                 .message("Order " + orderId + " has been " + status + "ed")
                                 .build()
                 );
     }
 
     @PostMapping("/calculate-fee")
-    public ResponseEntity<ApiResponse<Object>> calculateShippingCosts() {
+    public ResponseEntity<ApiResponse<Double>> calculateShippingCosts(
+            @RequestParam Double distance
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
-                        ApiResponse.<Object>builder()
+                        ApiResponse.<Double>builder()
                                 .timestamp(Instant.now())
                                 .success(true)
-                                .data(null)
+                                .data(shippingService.calculateFee(distance))
                                 .message("Calculate fee")
+                                .build()
+                );
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<ApiResponse<ShippingCreationResponse>> createShipping(
+            @RequestBody @Valid ShippingCreationRequest request
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiResponse.<ShippingCreationResponse>builder()
+                                .timestamp(Instant.now())
+                                .success(true)
+                                .data(shippingService.createShipping(request))
+                                .message("Created shipping")
                                 .build()
                 );
     }

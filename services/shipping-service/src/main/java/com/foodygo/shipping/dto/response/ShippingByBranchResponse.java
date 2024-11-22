@@ -17,7 +17,7 @@ public record ShippingByBranchResponse(
     ) {
         @Builder
         public record Shipping(
-                Integer shippingId,
+                Integer id,
                 Double distance,
                 Double fee,
                 Integer orderId,
@@ -25,7 +25,7 @@ public record ShippingByBranchResponse(
         ) {
             @Builder
             public record Shipper(
-                    Integer shipperId,
+                    Integer id,
                     String citizenId,
                     String photo,
                     String motoModel,

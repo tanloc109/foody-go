@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 docker-compose down -v
-docker-compose up mysql mongodb redis zookeeper postgresql -d
+docker-compose --profile init up -d
 
 set BASE_DIR=%~dp0services
 REM gateway inventory-service location-service notification-service order-service payment-service restaurant-service shipping-service user-service
@@ -10,36 +10,35 @@ set SERVICES=inventory-service:8084 location-service:8083 notification-service:8
 
 rem CONFIG SERVER
 rmdir /s /q "%BASE_DIR%\config-server\target"
-echo Building Config Server - 8888
+echo Building CONFIG SERVER - 8888...
 start /B cmd /C "cd %BASE_DIR%\config-server && mvn spring-boot:run > nul 2>&1"
+echo Starting CONFIG SERVER - 8888...
 :wait_for_config
-echo Starting Config Server - 8888
 timeout /t 2 /nobreak >nul
 netstat -an | findstr "8888" >nul
 if errorlevel 1 goto wait_for_config
-echo Config Server Started
 
 rem DISCOVERY
 rmdir /s /q "%BASE_DIR%\discovery\target"
-echo Building Discovery - 8761
+echo Building DISCOVERY - 8761...
 start /B cmd /C "cd %BASE_DIR%\discovery && mvn spring-boot:run > nul 2>&1"
+echo Starting DISCOVERY - 8761...
 :wait_for_discovery
-echo Starting DISCOVERY - 8761
 timeout /t 2 /nobreak >nul
 netstat -an | findstr "8761" >nul
 if errorlevel 1 goto wait_for_discovery
 
 rem GATEWAY
 rmdir /s /q "%BASE_DIR%\gateway\target"
-echo Building Gateway - 8080
+echo Building GATEWAY - 8080...
 start /B cmd /C "cd %BASE_DIR%\gateway && mvn spring-boot:run > nul 2>&1"
+echo Starting GATEWAY - 8080...
 :wait_for_gateway
-echo Starting Gateway - 8761
 timeout /t 2 /nobreak >nul
-netstat -an | findstr "8761" >nul
+netstat -an | findstr "8080" >nul
 if errorlevel 1 goto wait_for_gateway
 
-echo Would you like to start other services? (Y/N)
+echo Would you like to start other services? Y/N
 set /p choice=
 if /i "%choice%"=="Y" (
     rem Start other services silently
@@ -50,12 +49,12 @@ if /i "%choice%"=="Y" (
             start /B cmd /C "cd %BASE_DIR%\%%s && mvn spring-boot:run > nul 2>&1"
         )
     )
-    echo All services are running. Press any key to stop all services...
+    echo All services are running.
 ) else (
     echo Services were not started.
 )
 
-rem Wait for a key press to shut everything down
+echo Press any key to stop all services...
 pause >nul
 
 rem Stop all services
