@@ -1,13 +1,16 @@
 server:
   port: 8083
 spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      username: mongodb
-      password: mongodb
-      database: mongodb
+  datasource:
+    url: jdbc:mysql://localhost:3307/foodygo?useUnicode=true&characterEncoding=UTF-8
+    username: mysql
+    password: mysql
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
 springdoc:
   swagger-ui:
     path: /
