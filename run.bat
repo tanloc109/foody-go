@@ -6,37 +6,54 @@ docker-compose up mysql mongodb redis zookeeper postgresql -d
 
 set BASE_DIR=%~dp0services
 REM gateway inventory-service location-service notification-service order-service payment-service restaurant-service shipping-service user-service
-set SERVICES=gateway shipping-service user-service order-service
+set SERVICES=inventory-service:8084 location-service:8083 notification-service:8088 order-service:8085 payment-service:8087 restaurant-service:8082 shipping-service:8086 user-service:8081
 
-rem Start the config-server service silently
+rem CONFIG SERVER
 rmdir /s /q "%BASE_DIR%\config-server\target"
+echo Building Config Server - 8888
 start /B cmd /C "cd %BASE_DIR%\config-server && mvn spring-boot:run > nul 2>&1"
-
-rem Wait for config-server to be ready
 :wait_for_config
-echo Waiting for port 8888 to be available...
+echo Starting Config Server - 8888
 timeout /t 2 /nobreak >nul
 netstat -an | findstr "8888" >nul
 if errorlevel 1 goto wait_for_config
+echo Config Server Started
 
-rem Start the discovery service silently
+rem DISCOVERY
 rmdir /s /q "%BASE_DIR%\discovery\target"
+echo Building Discovery - 8761
 start /B cmd /C "cd %BASE_DIR%\discovery && mvn spring-boot:run > nul 2>&1"
-
-rem Wait for discovery service to be ready
 :wait_for_discovery
-echo Waiting for port 8761 to be available...
+echo Starting DISCOVERY - 8761
 timeout /t 2 /nobreak >nul
 netstat -an | findstr "8761" >nul
 if errorlevel 1 goto wait_for_discovery
 
-rem Start other services silently
-for %%S in (%SERVICES%) do (
-    rmdir /s /q "%BASE_DIR%\%%S\target"
-    start /B cmd /C "cd %BASE_DIR%\%%S && mvn spring-boot:run > nul 2>&1"
-)
+rem GATEWAY
+rmdir /s /q "%BASE_DIR%\gateway\target"
+echo Building Gateway - 8080
+start /B cmd /C "cd %BASE_DIR%\gateway && mvn spring-boot:run > nul 2>&1"
+:wait_for_gateway
+echo Starting Gateway - 8761
+timeout /t 2 /nobreak >nul
+netstat -an | findstr "8761" >nul
+if errorlevel 1 goto wait_for_gateway
 
-echo All services are running. Press any key to stop all services...
+echo Would you like to start other services? (Y/N)
+set /p choice=
+if /i "%choice%"=="Y" (
+    rem Start other services silently
+    for %%a in (%SERVICES%) do (
+        for /f "tokens=1,2 delims=:" %%s in ("%%a") do (
+            echo Starting %%s - %%t
+            rmdir /s /q "%BASE_DIR%\%%s\target"
+            start /B cmd /C "cd %BASE_DIR%\%%s && mvn spring-boot:run > nul 2>&1"
+        )
+    )
+    echo All services are running. Press any key to stop all services...
+) else (
+    echo Services were not started.
+)
 
 rem Wait for a key press to shut everything down
 pause >nul
