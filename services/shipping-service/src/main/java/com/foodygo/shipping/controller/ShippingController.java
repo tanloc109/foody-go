@@ -99,7 +99,7 @@ public class ShippingController {
                                 .timestamp(Instant.now())
                                 .success(true)
                                 .data(shippingService.createShipping(request))
-                                .message("Calculate fee")
+                                .message("Created shipping")
                                 .build()
                 );
     }

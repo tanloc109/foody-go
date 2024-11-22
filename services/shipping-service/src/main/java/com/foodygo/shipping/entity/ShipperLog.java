@@ -21,6 +21,7 @@ public class ShipperLog {
 
     Integer orderId;
 
+    @Builder.Default
     Instant time = Instant.now();
 
     ShipperLogAction action;

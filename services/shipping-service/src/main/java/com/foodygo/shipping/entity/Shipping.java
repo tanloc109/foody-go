@@ -23,6 +23,7 @@ public class Shipping {
 
     Double fee;
 
+    @Column(unique = true)
     Integer orderId;
 
     Integer branchId;
@@ -35,6 +36,7 @@ public class Shipping {
     @Builder.Default
     boolean deleted = false;
 
+    @Builder.Default
     Instant created = Instant.now();
 
     @ManyToOne
