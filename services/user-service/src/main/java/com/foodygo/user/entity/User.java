@@ -42,7 +42,7 @@ public class User implements UserDetails {
     Boolean isDeleted = false;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     List<Role> roles;
 
     @Override

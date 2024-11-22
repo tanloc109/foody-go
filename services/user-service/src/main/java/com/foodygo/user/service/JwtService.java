@@ -30,9 +30,13 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String extractPhone(String token) {
+        return extractClaim(token, claims -> claims.get("phone", String.class));
+    }
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", ((User) userDetails).getUsername());
+        claims.put("username", userDetails.getUsername());
         claims.put("phone", ((User) userDetails).getPhone());
         claims.put("fullname", ((User) userDetails).getFullname());
         claims.put("email", ((User) userDetails).getEmail());

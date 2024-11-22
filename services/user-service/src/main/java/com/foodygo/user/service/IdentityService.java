@@ -3,12 +3,12 @@ package com.foodygo.user.service;
 import com.foodygo.user.dto.request.*;
 import com.foodygo.user.dto.response.LoginResponse;
 import com.foodygo.user.dto.response.TokenResponse;
-import com.foodygo.user.entity.User;
+import com.foodygo.user.dto.response.UserDTO;
 
 public interface IdentityService {
-    User registerUser(RegisterRequest request);
+    UserDTO registerUser(RegisterRequest request);
     LoginResponse login(LoginRequest request);
-    boolean resetPassword(String token, ResetPasswordRequest request);
+    boolean resetPassword(ResetPasswordRequest request);
     TokenResponse verifyOTP(VerifyOTP otp);
     Object forgetPasswordRequest(ForgetPasswordRequest request);
 }

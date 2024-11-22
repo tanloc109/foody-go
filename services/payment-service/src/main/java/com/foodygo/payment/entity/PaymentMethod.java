@@ -18,13 +18,7 @@ public class PaymentMethod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    Double amount;
-
-    Instant datetime;
-
-    Integer customer_id;
-
-    Integer order_id;
+    String name;
 
     @Column(name = "is_deleted")
     Boolean isDeleted = false;

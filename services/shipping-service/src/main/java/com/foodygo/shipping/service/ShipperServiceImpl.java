@@ -1,5 +1,8 @@
 package com.foodygo.shipping.service;
 
+import com.foodygo.shipping.dto.request.ShipperCreationRequest;
+import com.foodygo.shipping.dto.request.ShipperUpdateRequest;
+import com.foodygo.shipping.dto.response.ShipperCreationUpdateResponse;
 import com.foodygo.shipping.entity.Shipper;
 import com.foodygo.shipping.exception.IdNotFoundException;
 import com.foodygo.shipping.repository.ShipperRepository;
@@ -35,5 +38,15 @@ public class ShipperServiceImpl implements ShipperService {
     public Shipper delete(Shipper shipper) {
         shipper.setDeleted(true);
         return repo.save(shipper);
+    }
+
+    @Override
+    public ShipperCreationUpdateResponse createShipper(ShipperCreationRequest request) {
+        return null;
+    }
+
+    @Override
+    public ShipperCreationUpdateResponse updateShipper(ShipperUpdateRequest request) {
+        return null;
     }
 }

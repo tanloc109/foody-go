@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
+                        .requestMatchers("/api/v1/identity/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
