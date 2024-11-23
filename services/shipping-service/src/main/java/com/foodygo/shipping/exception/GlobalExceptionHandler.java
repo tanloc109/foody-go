@@ -83,6 +83,20 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(ShipperInactiveException.class)
+    public ResponseEntity<ApiResponse<String>> handleShipperInactiveException(ShipperInactiveException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ApiResponse.<String>builder()
+                                .timestamp(Instant.now())
+                                .success(false)
+                                .message("Shipper inactive: " + e.getMessage())
+                                .errorCode(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<ApiResponse<String>> handleAlreadyExistsException(AlreadyExistsException e) {
         return ResponseEntity
