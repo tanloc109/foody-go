@@ -7,7 +7,7 @@ import lombok.Builder;
 public record ShipperUpdateRequest(
         String citizenId,
         String photo,
-        String photoModel,
+        String motoModel,
         String licensePlate,
         String driverLicenseId,
         String driverLicensePhoto,
