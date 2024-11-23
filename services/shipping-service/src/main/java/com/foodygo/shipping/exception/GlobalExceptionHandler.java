@@ -78,7 +78,21 @@ public class GlobalExceptionHandler {
                                 .timestamp(Instant.now())
                                 .success(false)
                                 .message("Id not found: " + e.getMessage())
-                                .errorCode(HttpStatus.NOT_FOUND.value())
+                                .errorCode(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ApiResponse<String>> handleAlreadyExistsException(AlreadyExistsException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ApiResponse.<String>builder()
+                                .timestamp(Instant.now())
+                                .success(false)
+                                .message("Already exists: " + e.getMessage())
+                                .errorCode(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
     }

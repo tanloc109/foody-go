@@ -15,6 +15,11 @@ public class LocationController {
 
     private final LocationService locationService;
 
+    @GetMapping()
+    public ResponseEntity<?> getAllLocations() {
+        return ResponseEntity.ok(locationService.getAllLocations());
+    }
+
     @GetMapping("/init")
     public ResponseEntity<String> initData() {
         locationService.initLocation();

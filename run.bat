@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 docker-compose down -v
-docker-compose up mysql mongodb redis zookeeper postgresql -d
+docker-compose --profile init up -d
 
 set BASE_DIR=%~dp0services
 REM gateway inventory-service location-service notification-service order-service payment-service restaurant-service shipping-service user-service
@@ -30,15 +30,15 @@ if errorlevel 1 goto wait_for_discovery
 
 rem GATEWAY
 rmdir /s /q "%BASE_DIR%\gateway\target"
-echo Building GATWAY - 8080...
+echo Building GATEWAY - 8080...
 start /B cmd /C "cd %BASE_DIR%\gateway && mvn spring-boot:run > nul 2>&1"
-echo Starting GATEWAY - 8761...
+echo Starting GATEWAY - 8080...
 :wait_for_gateway
 timeout /t 2 /nobreak >nul
-netstat -an | findstr "8761" >nul
+netstat -an | findstr "8080" >nul
 if errorlevel 1 goto wait_for_gateway
 
-echo Would you like to start other services? (Y/N)
+echo Would you like to start other services? Y/N
 set /p choice=
 if /i "%choice%"=="Y" (
     rem Start other services silently

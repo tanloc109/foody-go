@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.hibernate.dialect.MySQLDialect
-    url: jdbc:mysql://localhost:3307/foodygo?useUnicode=true&characterEncoding=UTF-8
-    username: mysql
-    password: mysql
+    url: jdbc:mysql://localhost:3306/foodygo?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 12345
   jpa:
     hibernate:
       ddl-auto: update

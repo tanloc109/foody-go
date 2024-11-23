@@ -1,15 +1,18 @@
 package com.foodygo.location.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "wards")
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "wards")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ward {
 
@@ -18,9 +21,8 @@ public class Ward {
 
     String name;
 
-    Integer districtId;
-
-    Integer type;
+    @ManyToOne
+    District district;
 
     Boolean isDeleted = false;
 }

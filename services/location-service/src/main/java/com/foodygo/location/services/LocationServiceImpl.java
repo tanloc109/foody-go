@@ -2,14 +2,19 @@ package com.foodygo.location.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.foodygo.location.dto.response.ProvinceResponseDTO;
 import com.foodygo.location.entities.District;
 import com.foodygo.location.entities.Province;
 import com.foodygo.location.entities.Ward;
+import com.foodygo.location.mapper.ProvinceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +26,12 @@ public class LocationServiceImpl implements LocationService {
     private final WardService wardService;
 
     @Override
+    public List<ProvinceResponseDTO> getAllLocations() {
+        List<Province> provinceList = provinceService.findAll();
+        return provinceList.stream().map(ProvinceMapper.INSTANCE::toDTO).toList();
+    }
+
+    @Override
     @Transactional
     public void initLocation() {
         JsonNode provinceData = getData("/provinces?page=0&size=63");
@@ -30,7 +41,6 @@ public class LocationServiceImpl implements LocationService {
                         .id(Integer.parseInt(dataItem.get("id").asText()))
                         .slug(dataItem.get("slug").asText())
                         .name(dataItem.get("name").asText())
-                        .type(dataItem.get("type").asInt())
                         .isDeleted(false)
                         .build();
                 provinceService.save(province);
@@ -43,9 +53,8 @@ public class LocationServiceImpl implements LocationService {
                 District district = District.builder()
                         .id(Integer.parseInt(dataItem.get("id").asText()))
                         .name(dataItem.get("name").asText())
-                        .type(dataItem.get("type").asInt())
                         .isDeleted(false)
-                        .provinceId(dataItem.get("provinceId").asInt())
+                        .province(provinceService.findById(dataItem.get("provinceId").asInt()))
                         .build();
                 districtService.save(district);
             });
@@ -57,8 +66,7 @@ public class LocationServiceImpl implements LocationService {
                     Ward ward = Ward.builder()
                             .id(Integer.parseInt(dataItem.get("id").asText()))
                             .name(dataItem.get("name").asText())
-                            .districtId(dataItem.get("districtId").asInt())
-                            .type(dataItem.get("type").asInt())
+                            .district(districtService.findById(dataItem.get("districtId").asInt()))
                             .isDeleted(false)
                             .build();
                     wardService.save(ward);

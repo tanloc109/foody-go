@@ -18,6 +18,11 @@ public class ProvinceServiceImpl implements ProvinceService {
     private final ProvinceRepository provinceRepository;
 
     @Override
+    public List<Province> findAll() {
+        return provinceRepository.findAllByIsDeletedIsFalse();
+    }
+
+    @Override
     public Province findById(Integer provinceId) {
         return provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new IdNotFoundException("Province Not Found!"));

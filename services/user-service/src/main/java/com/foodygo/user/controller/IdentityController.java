@@ -36,7 +36,7 @@ public class IdentityController {
         );
     }
 
-    @GetMapping("/forget-password")
+    @PostMapping("/forget-password")
     public ResponseEntity<ApiResponse<Object>> forgetPasswordRequest(@RequestBody ForgetPasswordRequest request) {
         return ResponseEntity.ok(
                 ApiResponse.builder()
@@ -64,7 +64,7 @@ public class IdentityController {
                 ApiResponse.builder()
                         .success(true)
                         .message("Reset password success")
-                        .data(identityService.resetPassword("",request))
+                        .data(identityService.resetPassword(request))
                         .build()
         );
     }

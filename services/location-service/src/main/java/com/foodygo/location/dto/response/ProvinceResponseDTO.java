@@ -6,18 +6,20 @@ import java.util.List;
 
 @Builder
 public record ProvinceResponseDTO(
-        Integer total,
-        List<ProvinceDTO> data,
-        String code,
-        String message
+        Integer id,
+        String name,
+        List<DistrictResponseDTO> districts
 ) {
     @Builder
-    public record ProvinceDTO(
-            String id,
+    public record DistrictResponseDTO(
+            Integer id,
             String name,
-            Integer type,
-            String typeText,
-            String slug
+            List<WardResponseDTO> wards
     ) {
+        @Builder
+        public record WardResponseDTO(
+                Integer id,
+                String name
+        ) {}
     }
 }
