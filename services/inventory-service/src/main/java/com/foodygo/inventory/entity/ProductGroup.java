@@ -1,5 +1,6 @@
 package com.foodygo.inventory.entity;
 
+import com.foodygo.inventory.util.constant.ProductStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -39,6 +40,9 @@ public class ProductGroup {
 
     @OneToMany(mappedBy = "productGroups", fetch = FetchType.LAZY)
     Set<ProductAddOnSection> productAddOnSections;
+
+    @Enumerated(EnumType.STRING)
+    ProductStatus productStatus;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)

@@ -1,5 +1,13 @@
 server:
   port: 8084
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/foodygo?useUnicode=true&characterEncoding=UTF-8
+    username: mysql
+    password: mysql
+  jpa:
+    hibernate:
+      ddl-auto: update
 springdoc:
   swagger-ui:
     path: /
