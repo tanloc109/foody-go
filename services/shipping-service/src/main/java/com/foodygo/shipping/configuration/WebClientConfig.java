@@ -14,6 +14,9 @@ public class WebClientConfig {
     @Value("${api.service.order}")
     private String orderServiceURL;
 
+    @Value("${api.service.notification}")
+    private String notificationServiceURL;
+
     @Bean
     public WebClient locationWebClient() {
         return WebClient.builder()
@@ -27,6 +30,14 @@ public class WebClientConfig {
         return WebClient.builder()
                 .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(10 * 1024 * 1024))
                 .baseUrl(orderServiceURL)
+                .build();
+    }
+
+    @Bean
+    public WebClient notificationWebClient() {
+        return WebClient.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(10 * 1024 * 1024))
+                .baseUrl(notificationServiceURL)
                 .build();
     }
 }

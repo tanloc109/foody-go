@@ -1,4 +1,4 @@
-package com.foodygo.shipping.service.kafka;
+package com.foodygo.notification.service.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ShippingConsumer {
 
-    @KafkaListener(topics = "shipping", groupId = "shipping-service")
+    @KafkaListener(topics = "shipping", groupId = "notification-service")
     public void listen(String message) {
-        log.info("Received message: {}", message);
+        log.info("Received Message: {}", message);
     }
 }
