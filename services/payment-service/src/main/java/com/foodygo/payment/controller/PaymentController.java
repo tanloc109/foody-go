@@ -30,7 +30,7 @@ public class PaymentController {
         return ResponseEntity.ok(
                 ApiResponse.builder()
                         .success(true)
-                        .message("Get payments of user: " + " success")
+                        .message("Get payments of user: " + userId + " success")
                         .data(paymentService.findByUserId(userId))
                         .build()
         );
@@ -41,7 +41,7 @@ public class PaymentController {
         return ResponseEntity.ok(
                 ApiResponse.builder()
                         .success(true)
-                        .message("Get payment: " + " success")
+                        .message("Get payment: " + paymentId + " success")
                         .data(paymentService.findById(paymentId))
                         .build()
         );

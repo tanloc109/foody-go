@@ -1,7 +1,29 @@
 server:
   port: 8087
+spring:
+  datasource:
+    driver-class-name: org.hibernate.dialect.MySQLDialect
+    url: jdbc:mysql://localhost:3306/foodygo?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 springdoc:
   swagger-ui:
     path: /
     operationsSorter: alpha
     tagsSorter: alpha
+payment:
+  vnPay:
+    url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    tmnCode: F8OLTRWN
+    secretKey: 74C6YDI9FOMRQ0QKKGD7KPP281G3SXCO
+    returnUrl: http://localhost:8080/api/v1/payment/vn-pay-callback
+    version: 2.1.0
+    command: pay
+    orderType: other
+
