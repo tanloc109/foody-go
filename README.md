@@ -1,6 +1,6 @@
 Food Delivery Microservices System
 
-NOTICE: This is a project being developed based on the hobby of 4 devs who find it interesting to learn more about microservices and flutter. THE PROJECT IS STILL UNDER DEVELOPMENT.
+NOTICE: This is a project being developed based on the hobby of 4 students who find it interesting to learn more about microservices and flutter. THE PROJECT IS STILL UNDER DEVELOPMENT.
 
 Overview: This project is a Food Delivery Application built using a microservices architecture. The system enables users to order food, restaurants to manage their offerings, shippers to deliver orders, and administrators to oversee operations. The project uses modern tools and technologies to ensure scalability, maintainability, and robustness.
 
